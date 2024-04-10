@@ -1,23 +1,31 @@
-import React from 'react'
-import { useState } from 'react';
-import {useDispatch,useSelector} from "react-redux"
-import { colorChange } from './colorSlice';
-
+import { useState } from "react";
+import {useSelector,useDispatch} from "react-redux"
+import { addtask } from "./todoSlice";
 const App = () => {
-  const dispatch=useDispatch("");
-  const [color,setColor]=useState("");
-  const myclr= useSelector((state)=>(state.mycolor.bgcolor));
-
+const ans=useSelector((state)=>state.todo.task);
+const [input,setInput]=useState('');
+const dispatch=useDispatch();
+const workAdd=()=>{
+  dispatch(addtask(input))
+}
+let sn=0;
+const myans=ans.map((key)=>{
+  sn++;
+  return(
+    <tr>
+      <td>{sn}</td>
+      <td>{key.work}</td>
+    </tr>
+  )
+});
+console.log(ans)
   return (
     <div>
-      <h1 style={{textAlign:'center'}}>Wellcome ColorChange slice</h1>
-      <center>
-      <input type='text' placeholder='enter color name' value={color} onChange={(e)=>{setColor(e.target.value)}}/>
-      <button onClick={()=>{dispatch(colorChange(color))}}>Change</button>
-      <div style={{width:"500px",height:"400px" , backgroundColor:myclr}}>
-
-      </div>
-      </center>
+      <h1>helo</h1>
+      Enter name:<input type="text" value={input} onChange={(e)=>{setInput(e.target.value)}}  />
+      <button onClick={workAdd}>Click</button>
+      <br/>
+      {myans}
     </div>
   )
 }
